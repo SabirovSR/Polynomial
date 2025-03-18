@@ -1,8 +1,8 @@
 ﻿#include "..\polinom\Monom.h"
+#include "..\polinom\Monom.cpp"
 #include "..\polinom\Polynomial.h"
 #include <string>
 #include <string>
-#include <vector>
 #include "gtest.h"
 
 // Проверка создания монома по умолчанию
