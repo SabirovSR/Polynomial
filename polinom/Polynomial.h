@@ -256,7 +256,8 @@ bool Polynomial :: operator==(Polynomial& other)
 	return true;
 }
 
-
+// сделать за линейную сложность
+// т.е. идем сразу по двум полиномам
 Polynomial& Polynomial:: operator+=(Polynomial& pol) {
 	Polynomial res;
 	this->reset();
