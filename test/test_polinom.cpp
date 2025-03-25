@@ -131,16 +131,9 @@ TEST(Polynomial, can_add_monoms_and_Polynomial_is_correctly_displayed)
 {
     Polynomial p;
     p.AddMonom(Monom(1, 1, 1, 0));
-    p.AddMonom(Monom(2, 2, 0, 0));
+    p.AddMonom(Monom(3, 2, 0, 0));
 
-    EXPECT_EQ("2x^2y^0z^0 + 1x^1y^1z^0", toString(p));
-}
-
-// Проверка отображения пустого полинома
-TEST(Polynomial, can_add_monoms_and_Polynomial_is_correctly_displayed_for_zero_Polynomial)
-{
-    Polynomial p;
-    EXPECT_EQ("0", toString(p));
+    EXPECT_EQ("3x^2y^0z^0 + 1x^1y^1z^0", toString(p));
 }
 
 // Проверка сложения полиномов

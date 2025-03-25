@@ -55,7 +55,6 @@ public:
 		Node<Monom>* tmp = p.pFirst;
 		bool isFirst = true;
 
-		// Флаг для проверки, есть ли ненулевые мономы
 		bool hasNoZero = false; 
 
 		while (tmp != nullptr)
@@ -64,7 +63,7 @@ public:
 
 			if (coeff != 0)
 			{
-				hasNoZero = true; // Нашли ненулевой моном
+				hasNoZero = true;
 
 				if (isFirst)
 				{
