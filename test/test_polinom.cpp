@@ -159,10 +159,10 @@ TEST(Polynomial, can_add_assign_Polynomials)
 {
     Polynomial p1, p2;
     p1.AddMonom(Monom(1, 1, 1, 0));
-    p2.AddMonom(Monom(2, 1, 1, 0));
+    p2.AddMonom(Monom(3, 1, 1, 0));
 
     p1 += p2;
-    EXPECT_EQ("3x^1y^1z^0", toString(p1));
+    EXPECT_EQ("4x^1y^1z^0", toString(p1));
 }
 
 // Проверка вычитания
@@ -364,7 +364,7 @@ TEST(Polynomial, can_subtract_assign_empty_Polynomial)
 TEST(Polynomial, can_subtract_assign_Polynomial_from_empty)
 {
     Polynomial P, Q;
-    Q.AddMonom(Monom(1.0, 1, 0, 0)); // x
+    Q.AddMonom(Monom(1.0, 1, 0, 0));
 
     P -= Q;
     EXPECT_EQ("-1x^1y^0z^0", toString(P)); // 0 - x = -x
@@ -398,24 +398,24 @@ TEST(Polynomial, multiply_Polynomial_by_monom_with_zero_coeff)
 TEST(Polynomial, add_Polynomials_with_different_degrees) 
 {
     Polynomial p1, p2;
-    p1.AddMonom(Monom(1.0, 1, 0, 0));
-    p2.AddMonom(Monom(2.0, 2, 0, 0));
+    p1.AddMonom(Monom(2.0, 1, 0, 0));
+    p2.AddMonom(Monom(3.0, 2, 0, 0));
 
     Polynomial sum = p1 + p2;
 
-    EXPECT_EQ("2x^2y^0z^0 + 1x^1y^0z^0", toString(sum));
+    EXPECT_EQ("3x^2y^0z^0 + 2x^1y^0z^0", toString(sum));
 }
 
 // Проверка вычитания полиномов с мономами с разными степенями
 TEST(Polynomial, subtract_Polynomials_with_different_degrees) 
 {
     Polynomial p1, p2;
-    p1.AddMonom(Monom(2.0, 2, 0, 0));
-    p2.AddMonom(Monom(1.0, 1, 0, 0));
+    p1.AddMonom(Monom(3.0, 2, 0, 0));
+    p2.AddMonom(Monom(2.0, 1, 0, 0));
 
     Polynomial diff = p1 - p2;
 
-    EXPECT_EQ("2x^2y^0z^0 - 1x^1y^0z^0", toString(diff));
+    EXPECT_EQ("3x^2y^0z^0 - 2x^1y^0z^0", toString(diff));
 }
 
 // Проверка умножения полинома на пустой
