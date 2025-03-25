@@ -43,13 +43,13 @@ bool Monom::operator!=(const Monom& m) const
 
 istream& operator>>(istream& in, Monom& mon)
 {
-    cout << "Введите коэффициент: ";
+    cout << "Коэффициент: ";
     in >> mon.coeff;
-    cout << "Введите степень x: ";
+    cout << "Степень x: ";
     in >> mon.x;
-    cout << "Введите степень y: ";
+    cout << "Степень y: ";
     in >> mon.y;
-    cout << "Введите степень z: ";
+    cout << "Степень z: ";
     in >> mon.z;
     return in;
 }

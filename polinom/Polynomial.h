@@ -28,13 +28,13 @@ public:
 	// Для сложения полиномов
 	Polynomial operator+(Polynomial& other);
 
-	// ля вычитания полиномов
+	// Для вычитания полиномов
 	Polynomial operator-(Polynomial& other);
 
-	// умножение полинома на константу
+	// Умножение полинома на константу
 	Polynomial operator*(double constanta);
 
-	// умножение полинома на моном
+	// Умножение полинома на моном
 	Polynomial operator*(Monom& m);
 
 	// Сравнение
@@ -111,7 +111,7 @@ public:
 std::istream& operator>>(std::istream& in, Polynomial& pol)		
 {
 	int numMonoms;
-	std::cout << "Введите количество мономов в полиноме: ";
+	std::cout << "Кол-во мономов: ";
 	in >> numMonoms;
 
 	for (int i = 0; i < numMonoms; ++i) 
@@ -123,7 +123,7 @@ std::istream& operator>>(std::istream& in, Polynomial& pol)
 	return in;
 }
 
-std::string toStr(const Polynomial& p)
+std::string toString(const Polynomial& p)
 {
 	std::ostringstream oss;
 	oss << p;
