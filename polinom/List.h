@@ -41,6 +41,17 @@ protected:
 
 public:
 
+	void DeleteOdd()
+	{
+		while(pFirst->pNext != nullptr && pFirst != nullptr)
+		{
+			Node<T>* odd = pFirst->pNext;
+			Node<T>* next = odd->pNext;
+			pFirst->pNext = next;
+			delete odd;
+		}
+	}
+
 	List();
 	~List();
 
@@ -143,6 +154,10 @@ void List<T>::insFirst(T elem)
 	if (pFirst == nullptr)
 	{
 		pLast = tmp;
+		pFirst = tmp;
+	}
+	else
+	{
 		pFirst = tmp;
 	}
 	sz++;

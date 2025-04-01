@@ -40,9 +40,9 @@ public:
 	// Сравнение
 	bool operator==(Polynomial& other);
 
-	Polynomial& operator+=(Polynomial& pol);
-	Polynomial& operator-=(Polynomial& pol);
-	Polynomial operator*(Polynomial& pol);
+	void operator+=(Polynomial p);
+	Polynomial& operator-=(Polynomial& p);
+	Polynomial operator*(Polynomial& p);
 
 	friend std::ostream& operator<<(std::ostream& out, const Polynomial& p)
 	{
@@ -258,50 +258,41 @@ bool Polynomial :: operator==(Polynomial& other)
 
 // сделать за линейную сложность
 // т.е. идем сразу по двум полиномам
-Polynomial& Polynomial:: operator+=(Polynomial& pol) {
-	Polynomial res;
-	this->reset();
-	pol.reset();
+void Polynomial:: operator+=(Polynomial p) {
 
-	while (!this->isEnd() || !pol.isEnd())
+	this->reset();
+	p.reset();
+	while (!p.isEnd() && !this->isEnd())
 	{
-		if (this->isEnd())
+		Monom m1 = this->pCurr->val;
+		Monom m2 = p.pCurr->val;
+		if (m2 > m1)
 		{
-			if (!pol.isEnd())
-			{
-				res.AddMonom(pol.getCurrent());
-				pol.goNext();
-			}
+			this->insCurr(m2);
+			p.goNext();
 		}
-		else if (pol.isEnd())
+		else if (m2 < m1)
 		{
-			res.AddMonom(this->getCurrent());
 			this->goNext();
 		}
-		else if (pol.getCurrent() > this->getCurrent())
+		else if (m1.coeff != (m2.coeff * -1.0))
 		{
-			res.AddMonom(pol.getCurrent());
-			pol.goNext();
-		}
-		else if (this->getCurrent() > pol.getCurrent()) 
-		{
-			res.AddMonom(this->getCurrent());
+			this->pCurr->val.coeff = m1.coeff + m2.coeff;
+			p.goNext();
 			this->goNext();
 		}
-		else											
+		else
 		{
-			Monom sum = this->getCurrent();				
-			sum.coeff += pol.getCurrent().coeff;
-			if (sum.coeff != 0)							
-			{
-				res.AddMonom(sum);
-			}
-			this->goNext();
-			pol.goNext();
+			this->delCurr();
+			p.goNext();
 		}
 	}
-	*this = res;
-	return *this;
+
+	if (this->isEnd() && !p.isEnd())
+	{
+		for (; !p.isEnd(); p.goNext())
+			this->insLast(p.pCurr->val);
+	}
 }
 
 

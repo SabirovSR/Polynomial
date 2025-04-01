@@ -211,6 +211,7 @@ TEST(Polynomial, can_add_Polynomial_without_common_monomials)
     Q.AddMonom(Monom(5.0, 2, 0, 0)); // 5x²
 
     P += Q;
+    cout << P; // 5x^2y^0z^0 + 2x^1y^0z^0 + 3x^0y^1z^0 + 1x^0y^0z^2
     EXPECT_EQ("5x^2y^0z^0 + 2x^1y^0z^0 + 3x^0y^1z^0 + 1x^0y^0z^2", toString(P));
 }
 
