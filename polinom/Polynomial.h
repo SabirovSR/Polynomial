@@ -41,7 +41,7 @@ public:
 	bool operator==(Polynomial& other);
 
 	void operator+=(Polynomial p);
-	Polynomial& operator-=(Polynomial& p);
+	void operator-=(Polynomial p);
 	Polynomial operator*(Polynomial& p);
 
 	friend std::ostream& operator<<(std::ostream& out, const Polynomial& p)
@@ -256,8 +256,6 @@ bool Polynomial :: operator==(Polynomial& other)
 	return true;
 }
 
-// сделать за линейную сложность
-// т.е. идем сразу по двум полиномам
 void Polynomial:: operator+=(Polynomial p) {
 
 	this->reset();
@@ -296,55 +294,46 @@ void Polynomial:: operator+=(Polynomial p) {
 }
 
 
-Polynomial& Polynomial::operator-=(Polynomial& pol) 
+void Polynomial::operator-=(Polynomial p) 
 {
-	Polynomial res;
 	this->reset();
-	pol.reset();
-
-	while (!this->isEnd() || !pol.isEnd()) 
+	p.reset();
+	while (!p.isEnd() && !this->isEnd())
 	{
-		if (this->isEnd()) 
+		Monom m1 = this->pCurr->val;
+		Monom m2 = p.pCurr->val;
+		if (m2 > m1)
 		{
-			if (!pol.isEnd()) 
-			{
-				Monom tmp = pol.getCurrent();
-				tmp.coeff = -tmp.coeff;
-				res.AddMonom(tmp);
-				pol.goNext();
-			}
+			m2.coeff *= -1;
+			this->insCurr(m2);
+			p.goNext();
 		}
-		else if (pol.isEnd())
+		else if (m2 < m1)
 		{
-			res.AddMonom(this->getCurrent());
 			this->goNext();
 		}
-		else if (pol.getCurrent() > this->getCurrent()) 
+		else if (m1.coeff != m2.coeff)
 		{
-			Monom tmp = pol.getCurrent();
-			tmp.coeff = -tmp.coeff;
-			res.AddMonom(tmp);
-			pol.goNext();
-		}
-		else if (this->getCurrent() > pol.getCurrent()) 
-		{
-			res.AddMonom(this->getCurrent());
+			this->pCurr->val.coeff = m1.coeff - m2.coeff;
+			p.goNext();
 			this->goNext();
 		}
-		else 
+		else
 		{
-			Monom sum = this->getCurrent();
-			sum.coeff -= pol.getCurrent().coeff;
-			if (sum.coeff != 0) 
-			{
-				res.AddMonom(sum);
-			}
-			this->goNext();
-			pol.goNext();
+			this->delCurr();
+			p.goNext();
 		}
 	}
-	*this = res;
-	return *this;
+
+	if (this->isEnd() && !p.isEnd())
+	{
+		for (; !p.isEnd(); p.goNext())
+		{
+			Monom m = p.pCurr->val;
+			m.coeff *= -1;
+			this->insLast(m);
+		}
+	}
 }
 
 Polynomial Polynomial::operator*(Polynomial& pol)
